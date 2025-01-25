@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
         color: Colors.black.withOpacity(0.8),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Center(
+      child: const Center(
           child: Text(
             'Add',
             style: TextStyle(fontSize: 20),
