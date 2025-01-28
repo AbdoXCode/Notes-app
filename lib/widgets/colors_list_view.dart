@@ -28,7 +28,7 @@ class ColorNote extends StatelessWidget {
 class ColorListView extends StatefulWidget {
   const ColorListView({super.key, this.isActive});
 
-  final bool ?isActive;
+  final bool? isActive;
 
   @override
   State<ColorListView> createState() => _ColorListViewState();
@@ -37,7 +37,7 @@ class ColorListView extends StatefulWidget {
 class _ColorListViewState extends State<ColorListView> {
   int currentIndex = 0;
 
-  List<Color> colors =const [
+  List<Color> colors = const [
     Color(0xffE2EB98),
     Color(0xff93A392),
     Color(0xffADBF97),
@@ -49,24 +49,26 @@ class _ColorListViewState extends State<ColorListView> {
     return SizedBox(
       height: 38 * 2,
       child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: colors.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-              child: GestureDetector(
-                onTap: () {
-                  currentIndex = index;
-                  BlocProvider.of<AddNoteCubit>(context).color = colors[index];
-                  setState((){});
-                },
-                child: ColorNote(
-                  isActive: currentIndex == index, color: colors[index],
-                ),
+        physics: const BouncingScrollPhysics(),
+        itemCount: colors.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+            child: GestureDetector(
+              onTap: () {
+                currentIndex = index;
+                BlocProvider.of<AddNoteCubit>(context).color = colors[index];
+                setState(() {});
+              },
+              child: ColorNote(
+                isActive: currentIndex == index,
+                color: colors[index],
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
