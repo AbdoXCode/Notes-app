@@ -18,38 +18,34 @@ class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddNoteCubit(),
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          top: 16,
-          bottom: MediaQuery
-              .of(context)
-              .viewInsets
-              .bottom + 16,
-        ),
-        child: BlocConsumer<AddNoteCubit, AddNoteState>(
-          listener: (context, state) {
-            if (state is AddNoteLoading) {
-              isLoading = true;
-            } else if (state is AddNoteSuccess) {
-              isLoading = false;
-              Navigator.pop(context);
-            } else if (state is AddNoteFailure) {
-              isLoading = false;
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.errorMsg)));
-            }
-          },
-          builder: (context, state) {
-            return ModalProgressHUD(
-                inAsyncCall: isLoading,
-                child: const SingleChildScrollView(child: AddNoteForm())
-            );
-          },
-        ),
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        listener: (context, state) {
+          if (state is AddNoteLoading) {
+            isLoading = true;
+          } else if (state is AddNoteSuccess) {
+            isLoading = false;
+            Navigator.pop(context);
+          } else if (state is AddNoteFailure) {
+            isLoading = false;
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.errorMsg)));
+          }
+        },
+        builder: (context, state) {
+          return AbsorbPointer(
+            absorbing: state is AddNoteLoading?true:false,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 16,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+              ),
+              child: const SingleChildScrollView(child: AddNoteForm()),
+            ),
+          );
+        },
       ),
     );
   }
 }
-
