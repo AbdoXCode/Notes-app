@@ -18,7 +18,7 @@ class AddNoteForm extends StatefulWidget {
 
 class _AddNoteFormState extends State<AddNoteForm> {
   final GlobalKey<FormState> formKey = GlobalKey();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
   String? title, content;
 
@@ -26,17 +26,17 @@ class _AddNoteFormState extends State<AddNoteForm> {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      autovalidateMode: autovalidateMode,
+      autovalidateMode: autoValidateMode,
       child: Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CustomTextField(
             hint: 'Title',
             onSaved: (value) {
               title = value;
             },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CustomTextField(
             hint: 'Content',
             onSaved: (value) {
@@ -44,10 +44,11 @@ class _AddNoteFormState extends State<AddNoteForm> {
             },
             maxLines: 5,
           ),
-          SizedBox(height: 20),
-          ColorListView(isActive: true,),
-          SizedBox(height: 20),
-
+          const SizedBox(height: 20),
+          const ColorListView(
+            isActive: true,
+          ),
+          const SizedBox(height: 20),
           BlocBuilder<AddNoteCubit, AddNoteState>(
             builder: (context, state) {
               return CustomButton(
@@ -62,9 +63,18 @@ class _AddNoteFormState extends State<AddNoteForm> {
                       color: Colors.blue.value,
                     );
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Note added successfully',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: Colors.black,
+                      ),
+                    );
                   } else {
                     setState(() {
-                      autovalidateMode = AutovalidateMode.always;
+                      autoValidateMode = AutovalidateMode.always;
                     });
                   }
                 },
@@ -76,4 +86,3 @@ class _AddNoteFormState extends State<AddNoteForm> {
     );
   }
 }
-

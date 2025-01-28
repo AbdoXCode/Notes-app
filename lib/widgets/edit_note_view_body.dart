@@ -33,6 +33,14 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
               widget.note.save();
               BlocProvider.of<NotesCubit>(context).fetchAllNotes();
               Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Note edited successfully',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.black,
+                  ),);
             },
           ),
           const SizedBox(
